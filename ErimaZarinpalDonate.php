@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Erima Zarinpal Donate - حمایت مالی 
-Plugin URI: http://dblog.ir/?page_id=47
+Plugin Name: Zarinpal Donate - حمایت مالی
+Plugin URI:
 Description: افزونه حمایت مالی از وبسایت ها -- برای استفاده تنها کافی است کد زیر را درون بخشی از برگه یا نوشته خود قرار دهید  [ErimaZarinpalDonate]
 Version: 1.0
-Author:  سید امیر
-Author URI: http://dblog.ir
+Author:
+Author URI:
 */
 
 defined('ABSPATH') or die('Access denied!');
@@ -69,11 +69,19 @@ function ErimaZarinpalDonateForm() {
 		}
 
 
-		$Amount = filter_input(INPUT_POST, 'EZD_Amount', FILTER_SANITIZE_SPECIAL_CHARS);
+		$Name =           filter_input(INPUT_POST, 'EZD_Name', FILTER_SANITIZE_SPECIAL_CHARS);  // Required
+		$Mobile =         filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_SPECIAL_CHARS); // Optional
+		$Email =          filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS); // Optional
+		$Description =    filter_input(INPUT_POST, 'EZD_Description', FILTER_SANITIZE_SPECIAL_CHARS);  // Optional
+		$Amount =         filter_input(INPUT_POST, 'EZD_Amount', FILTER_SANITIZE_SPECIAL_CHARS);
+		$AuthorId =       filter_input(INPUT_POST, 'author_id', FILTER_SANITIZE_SPECIAL_CHARS); // Required
+		$userName =       filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_SPECIAL_CHARS); // Required
 
+		if ($Name == '' || $Name == null){
+			$error .= 'لطفا نام خود را وارد کنید!' . "<br>\r\n";
+		}
 		if(is_numeric($Amount) != false)
 		{
-			//Amount will be based on Toman  - Required
 			if($EZD_Unit == 'ریال')
 				$SendAmount =  $Amount / 10;
 			else
@@ -84,29 +92,22 @@ function ErimaZarinpalDonateForm() {
 			$error .= 'مبلغ به درستی وارد نشده است' . "<br>\r\n";
 		}
 
-		$Description =    filter_input(INPUT_POST, 'EZD_Description', FILTER_SANITIZE_SPECIAL_CHARS);  // Required
-		$Name =           filter_input(INPUT_POST, 'EZD_Name', FILTER_SANITIZE_SPECIAL_CHARS);  // Required
-		$Mobile =         filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_SPECIAL_CHARS); // Optional
-		$Email =          filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS); // Optional
-		$AuthorId =       filter_input(INPUT_POST, 'author_id', FILTER_SANITIZE_SPECIAL_CHARS); // Required
-		$userName =       filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_SPECIAL_CHARS); // Required
-
-
 		global $wpdb;
 		$usersTable = $wpdb->prefix . 'users';
 		$res = $wpdb->get_results("SELECT * FROM ${usersTable} WHERE ID = '${AuthorId}' AND display_name='${userName}' LIMIT 1");
-		if(count($res) == 0) return false;
+		if(count($res) == 0) {
+			$error .= 'خطا در اعتبارسنجی!' . "<br>\r\n";
+		}
 
 
 		$SendDescription = $Name . ' | ' . $Mobile . ' | ' . $Email . ' | ' . $Description ;
 
-		if($error == '') // اگر خطایی نباشد
+		if($error == '')
 		{
 			$CallbackURL = EZD_GetCallBackURL();  // Required
-
-
 			// URL also Can be https://ir.zarinpal.com/pg/services/WebGate/wsdl
-			$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+//			$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 			$client->soap_defencoding = 'UTF-8';
 			$result = $client->call('PaymentRequest', array(
 					array(
@@ -119,35 +120,35 @@ function ErimaZarinpalDonateForm() {
 					)
 				)
 			);
-
 			//Redirect to URL You can do it also by creating a form
 			if($result['Status'] == 100)
 			{
-//				// WriteToDB
-//				EZD_AddDonate(array(
-//					'Authority'     => $result['Authority'],
-//					'Name'          => $Name,
-//					'AmountTomaan'  => $SendAmount,
-//					'Mobile'        => $Mobile,
-//					'Email'         => $Email,
-//					'InputDate'     => current_time( 'mysql' ),
-//					'Description'   => $Description,
-//					'AuthorId'   => $AuthorId,
-//					'Status'        => 'SEND'
-//				),array(
-//					'%s',
-//					'%s',
-//					'%d',
-//					'%s',
-//					'%s',
-//					'%s',
-//					'%s',
-//					'%s'
-//				));
+				// WriteToDB
+				EZD_AddDonate(array(
+					'Authority'     => $result['Authority'],
+					'Name'          => $Name,
+					'AmountTomaan'  => $SendAmount,
+					'Mobile'        => $Mobile,
+					'Email'         => $Email,
+					'InputDate'     => current_time( 'mysql' ),
+					'Description'   => $Description,
+					'Status'        => 'SEND',
+					'paymentStatus'        => 'Not Paid'
+				),array(
+					'%s',
+					'%s',
+					'%d',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s'
+				));
 
 				//Header('Location: https://www.zarinpal.com/pg/StartPay/'.$result['Authority']);
-				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
-
+				$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
+//				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
 				return "<script>document.location = '${Location}'</script><center>در صورتی که به صورت خودکار به درگاه بانک منتقل نشدید <a href='${Location}'>اینجا</a> را کلیک کنید.</center>";
 			}
 			else
@@ -158,24 +159,25 @@ function ErimaZarinpalDonateForm() {
 	}
 	//// END REQUEST
 
+
 	/// Start RESPONSE
 	if(isset($_GET['Authority']))
 	{
 		require_once( LIBDIR . '/nusoap.php' );
 
-		$Authority = filter_input(INPUT_GET, 'Authority', FILTER_SANITIZE_SPECIAL_CHARS);
+	$Authority = filter_input(INPUT_GET, 'Authority', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		if($_GET['Status'] == 'OK'){
 
-			$Record = EZD_GetDonate($Authority);
+		$Record = EZD_GetDonate($Authority);
 			if( $Record  === false)
 			{
 				$error .= 'چنین تراکنشی در سایت ثبت نشده است' . "<br>\r\n";
 			}
 			else
 			{
-				// URL also Can be https://ir.zarinpal.com/pg/services/WebGate/wsdl
-				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+//				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 				$client->soap_defencoding = 'UTF-8';
 				$result = $client->call('PaymentVerification', array(
 						array(
@@ -195,29 +197,18 @@ function ErimaZarinpalDonateForm() {
 					$EZD_TotalAmount = get_option("EZD_TotalAmount");
 					update_option("EZD_TotalAmount" , $EZD_TotalAmount + $Record['AmountTomaan']);
 
-					// WriteToDB
-					EZD_AddDonate(array(
-						'Authority'     => $result['Authority'],
-						'Name'          => $Name,
-						'AmountTomaan'  => $SendAmount,
-						'Mobile'        => $Mobile,
-						'Email'         => $Email,
-						'InputDate'     => current_time( 'mysql' ),
-						'Description'   => $Description,
-						'AuthorId'   => $AuthorId,
-						'TrackingCode'   => $result['RefID'],
-						'Status'        => 'SEND'
-					),array(
-						'%s',
-						'%s',
-						'%d',
-						'%s',
-						'%s',
-						'%s',
-						'%s',
-						'%s',
-						'%s'
-					));
+
+					global $wpdb;
+					$table = $wpdb->prefix . TABLE_DONATE;
+					$update = $wpdb->update( $table, array(
+						'TrackingCode'=> $result['RefID']
+					),
+						array( 'Authority' => $Authority),
+						array( '%s' ),
+						array( '%s' )
+					);
+
+
 				}
 				else
 				{
@@ -237,7 +228,6 @@ function ErimaZarinpalDonateForm() {
 
 
 	$style = '';
-
 	if(get_option('EZD_UseCustomStyle') == 'true')
 	{
 		$style = get_option('EZD_CustomStyle');
@@ -263,12 +253,6 @@ function ErimaZarinpalDonateForm() {
             </div>";
 	}
 
-	if($error != '')
-	{
-		$out .= "<div id=\"EZD_Error\">
-    ${error}
-            </div>";
-	}
 
 	$out .=      '<form method="post">
               <div class="EZD_FormItem">
@@ -299,16 +283,27 @@ function ErimaZarinpalDonateForm() {
                 <div class="EZD_ItemInput"><input type="text" name="EZD_Description" value="'. $Description .'" /></div>
               </div>
               
-              <input type="hidden" value="'. $_GET['author_id'] .'" name="author_id">
+              <input type="hidden" value="'. $_GET['transaction_id'] .'" name="author_id">
               <input type="hidden" value="'. $_GET['user_name'] .'" name="user_name">
               <div class="EZD_FormItem"> <input type="submit" name="submit" value="پرداخت" class="EZD_Submit" /> </div>
             </form>
+            
+            
           </div>
         </div>
       </div>
 	';
 
+	if($error != '')
+	{
+		$out .= "<div id=\"EZD_Error\">
+    ${error}
+            </div>";
+	}
+
 	return $out;
+
+
 }
 
 /////////////////////////////////////////////////
@@ -325,15 +320,16 @@ function EZD_CreateDatabaseTables()
 	// Creat table
 	$table = "CREATE TABLE IF NOT EXISTS `$erimaDonateTable` (
 					  `DonateID` int(11) NOT NULL AUTO_INCREMENT,
-					  `Authority` varchar(50) NOT NULL,
-					  `Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_persian_ci NOT NULL,
+					  `Authority` varchar(55) NOT NULL,
+					  `Name` varchar(55) CHARACTER SET utf8 COLLATE utf8_persian_ci NOT NULL,
 					  `AmountTomaan` int(11) NOT NULL,
 					  `Mobile` varchar(11) ,
-					  `Email` varchar(50),
-					  `InputDate` varchar(20),
+					  `Email` varchar(55),
+					  `InputDate` varchar(55),
 					  `Description` varchar(100) CHARACTER SET utf8 COLLATE utf8_persian_ci,
 					  `TrackingCode` varchar(100),
-					  `Status` varchar(5),
+					  `Status` varchar(20),
+					  `paymentStatus` varchar(20),
 					  PRIMARY KEY (`DonateID`),
 					  KEY `DonateID` (`DonateID`)
 					) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
@@ -544,4 +540,18 @@ function EZD_GetCallBackURL()
 	return $pageURL;
 }
 
+
+define('ZARIN_ADMIN_JS', plugin_dir_url(__FILE__) . 'admin/js/');
+define('ZARIN_ADMIN', plugin_dir_path(__FILE__) . 'admin/');
+add_action ('admin_enqueue_scripts', function(){
+	wp_enqueue_script('admin-scripts', ZARIN_ADMIN_JS.'admin-scripts.js' , array('jquery'));
+	wp_localize_script( 'admin-scripts', 'ZARINADMINAJAX', array(
+		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		'security' => wp_create_nonce( '28=(n6i|R|CMQ/' )
+	));
+});
+
+if(is_admin()){
+	include(ZARIN_ADMIN . 'ajax_requests.php');
+}
 ?>
