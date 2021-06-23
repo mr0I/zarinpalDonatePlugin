@@ -3,7 +3,7 @@
 Plugin Name: Zarinpal Donate - حمایت مالی
 Plugin URI:
 Description: افزونه حمایت مالی از وبسایت ها -- برای استفاده تنها کافی است کد زیر را درون بخشی از برگه یا نوشته خود قرار دهید  [ErimaZarinpalDonate]
-Version: 1.0
+Version: 1.1
 Author:
 Author URI:
 */
@@ -255,32 +255,41 @@ function ErimaZarinpalDonateForm() {
 
 
 	$out .=      '<form method="post">
-              <div class="EZD_FormItem">
-                <label class="EZD_FormLabel">مبلغ :</label>
-                <div class="EZD_ItemInput">
-                  <input style="width:60%" type="text" name="EZD_Amount" value="'. $Amount .'" />
-                  <span style="margin-right:10px;">'. $EZD_Unit .'</span>
-                </div>
-              </div>
               
               <div class="EZD_FormItem">
-                <label class="EZD_FormLabel">نام و نام خانوادگی :</label>
+                <label class="EZD_FormLabel">نام و نام خانوادگی</label>
                 <div class="EZD_ItemInput"><input type="text" name="EZD_Name" value="'. $Name .'" /></div>
               </div>
               
               <div class="EZD_FormItem">
-                <label class="EZD_FormLabel">تلفن همراه :</label>
+                <label class="EZD_FormLabel">تلفن همراه</label>
                 <div class="EZD_ItemInput"><input type="text" name="mobile" value="'. $Mobile .'" /></div>
               </div>
               
               <div class="EZD_FormItem">
-                <label class="EZD_FormLabel">ایمیل :</label>
+                <label class="EZD_FormLabel">ایمیل</label>
                 <div class="EZD_ItemInput"><input type="text" name="email" style="direction:ltr;text-align:left;" value="'. $Email .'" /></div>
               </div>
               
               <div class="EZD_FormItem">
-                <label class="EZD_FormLabel">توضیحات :</label>
+                <label class="EZD_FormLabel">توضیحات</label>
                 <div class="EZD_ItemInput"><input type="text" name="EZD_Description" value="'. $Description .'" /></div>
+              </div>
+              
+              <div class="EZD_FormItem">
+                <label class="EZD_FormLabel">مبلغ</label>
+              
+                <div class="EZD_ItemInput">
+                <select name="EZD_Amount" id="EZD_Amount_Select">
+	                <option value="10000">10000 تومان</option>
+	                <option value="20000">20000 تومان</option>
+	                <option value="50000">50000 تومان</option>
+	                <option value="100000">100000 تومان</option>
+	                <option value="others">سایر مبالغ</option>
+				</select>
+                  <input style="width:60%" type="text" name="EZD_Amount" id="EZD_Amount_Input" value="'. $Amount .'" />
+                  <span style="margin-right:10px;display: none;">'. $EZD_Unit .'</span>
+                </div>
               </div>
               
               <input type="hidden" value="'. $_GET['transaction_id'] .'" name="author_id">
@@ -430,7 +439,13 @@ input.EZD_Submit {
   font: inherit;
   float: right;
   margin-right: 24%;
-}';
+}
+
+input[name="EZD_Amount"]{
+display:none !important;
+}
+
+';
 	add_option("EZD_CustomStyle", $style, '', 'yes');
 	add_option("EZD_UseCustomStyle", 'false', '', 'yes');
 }
@@ -554,4 +569,14 @@ add_action ('admin_enqueue_scripts', function(){
 if(is_admin()){
 	include(ZARIN_ADMIN . 'ajax_requests.php');
 }
+
+define('ZARIN_CSS_JS', plugin_dir_url(__FILE__));
+add_action( 'wp_enqueue_scripts', function(){
+	// styles
+	wp_enqueue_style( 'erima_styles', ZARIN_CSS_JS . 'styles.css');
+	// scripts
+	wp_enqueue_script('erima_scripts', ZARIN_CSS_JS.'scripts.js' , array('jquery'));
+});
+
+
 ?>

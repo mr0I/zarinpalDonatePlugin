@@ -6,21 +6,29 @@ function payDonate_callback(){
 	check_ajax_referer( '28=(n6i|R|CMQ/', 'security' );
 
 	if ( wp_verify_nonce($_POST['nonce'], 'donate-select-nonce')) {
+		$ids = $_POST['selectedDonatesIds'];
 
-		//$ids = $_POST['selectedDonatesIds'];
-
-
-
-		$result['result'] = 'Success';
-		$result['product_name'] = 'name';
-		wp_send_json( $result );
-		//exit();
+		global $wpdb;
+		$table = $wpdb->prefix . TABLE_DONATE;
+		$c = 0;
+		foreach ($ids as $id){
+			$update = $wpdb->update( $table, array(
+				'paymentStatus'=> 'Paid'
+			),
+				array( 'DonateID' => absint($id)),
+				array( '%s' ),
+				array( '%d' )
+			);
+			if ($update) {$c++;}
+		}
+		$data=array( 'result' => 'OK' , 'count' => $c );
+		echo json_encode($data);
+		exit();
 	} else {
-//		$result['result'] = 'ok';
-//		wp_send_json( $result );
-//		exit();
+		$data=array( 'result' => 'Authenticate Error' );
+		echo json_encode($data);
+		exit();
 	}
-
 }
 add_action( 'wp_ajax_payDonate', 'payDonate_callback' );
 add_action( 'wp_ajax_nopriv_payDonate', 'payDonate_callback' );
