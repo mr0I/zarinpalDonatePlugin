@@ -3,8 +3,8 @@
 Plugin Name: Zarinpal Donate - حمایت مالی
 Plugin URI:
 Description: افزونه حمایت مالی از وبسایت ها -- برای استفاده تنها کافی است کد زیر را درون بخشی از برگه یا نوشته خود قرار دهید  [ErimaZarinpalDonate]
-Version: 1.1
-Author:
+Version: 1.2
+Author: John Dou
 Author URI:
 */
 
@@ -106,8 +106,8 @@ function ErimaZarinpalDonateForm() {
 		{
 			$CallbackURL = EZD_GetCallBackURL();  // Required
 			// URL also Can be https://ir.zarinpal.com/pg/services/WebGate/wsdl
-			$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
-//			$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			//$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 			$client->soap_defencoding = 'UTF-8';
 			$result = $client->call('PaymentRequest', array(
 					array(
@@ -132,6 +132,7 @@ function ErimaZarinpalDonateForm() {
 					'Email'         => $Email,
 					'InputDate'     => current_time( 'mysql' ),
 					'Description'   => $Description,
+					'Author'   => $userName,
 					'Status'        => 'SEND',
 					'paymentStatus'        => 'Not Paid'
 				),array(
@@ -143,12 +144,13 @@ function ErimaZarinpalDonateForm() {
 					'%s',
 					'%s',
 					'%s',
+					'%s',
 					'%s'
 				));
 
 				//Header('Location: https://www.zarinpal.com/pg/StartPay/'.$result['Authority']);
-				$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
-//				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
+//				$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
+				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
 				return "<script>document.location = '${Location}'</script><center>در صورتی که به صورت خودکار به درگاه بانک منتقل نشدید <a href='${Location}'>اینجا</a> را کلیک کنید.</center>";
 			}
 			else
@@ -176,8 +178,8 @@ function ErimaZarinpalDonateForm() {
 			}
 			else
 			{
-				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
-//				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+//				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 				$client->soap_defencoding = 'UTF-8';
 				$result = $client->call('PaymentVerification', array(
 						array(
@@ -254,11 +256,11 @@ function ErimaZarinpalDonateForm() {
 	}
 
 
-	$out .=      '<form method="post">
+	$out .=      '<form method="post" id="erima_add_donate_frm">
               
-              <div class="EZD_FormItem">
-                <label class="EZD_FormLabel">نام و نام خانوادگی</label>
-                <div class="EZD_ItemInput"><input type="text" name="EZD_Name" value="'. $Name .'" /></div>
+              <div class="EZD_FormItem required">
+                <label class="EZD_FormLabel">نام شما</label>
+                <div class="EZD_ItemInput"><input type="text" name="EZD_Name" id="EZD_Name_Input" value="'. $Name .'" /></div>
               </div>
               
               <div class="EZD_FormItem">
@@ -276,9 +278,8 @@ function ErimaZarinpalDonateForm() {
                 <div class="EZD_ItemInput"><input type="text" name="EZD_Description" value="'. $Description .'" /></div>
               </div>
               
-              <div class="EZD_FormItem">
+              <div class="EZD_FormItem required">
                 <label class="EZD_FormLabel">مبلغ</label>
-              
                 <div class="EZD_ItemInput">
                 <select name="EZD_Amount" id="EZD_Amount_Select">
 	                <option value="10000">10000 تومان</option>
@@ -287,14 +288,17 @@ function ErimaZarinpalDonateForm() {
 	                <option value="100000">100000 تومان</option>
 	                <option value="others">سایر مبالغ</option>
 				</select>
-                  <input style="width:60%" type="text" name="EZD_Amount" id="EZD_Amount_Input" value="'. $Amount .'" />
+                  <input style="width:60%" type="text" name="EZD_Amount" id="EZD_Amount_Input" placeholder="مبلغ دلخواهتان را وارد کنید..." 
+                  value="'. $Amount .'" onkeyup="this.value = this.value.replace(/[^\d]+/g, \'\');" />
                   <span style="margin-right:10px;display: none;">'. $EZD_Unit .'</span>
                 </div>
               </div>
               
               <input type="hidden" value="'. $_GET['transaction_id'] .'" name="author_id">
               <input type="hidden" value="'. $_GET['user_name'] .'" name="user_name">
-              <div class="EZD_FormItem"> <input type="submit" name="submit" value="پرداخت" class="EZD_Submit" /> </div>
+              <div class="EZD_FormItem"> 
+              <button type="submit" name="submit" class="EZD_Submit" disabled>پرداخت</button>
+              </div>
             </form>
             
             
@@ -339,6 +343,7 @@ function EZD_CreateDatabaseTables()
 					  `TrackingCode` varchar(100),
 					  `Status` varchar(20),
 					  `paymentStatus` varchar(20),
+					  `Author` varchar(55),
 					  PRIMARY KEY (`DonateID`),
 					  KEY `DonateID` (`DonateID`)
 					) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";

@@ -1,10 +1,20 @@
 jQuery(document).ready(function($) {
 
+    const EZD_Amount_Input = document.getElementById("EZD_Amount_Input");
+    const EZD_Name_Input = document.getElementById("EZD_Name_Input");
+    EZD_Amount_Input.defaultValue="10000";
+
+    $('#erima_add_donate_frm').on('change' , function () {
+        let name_val = EZD_Name_Input.value;
+        if (name_val !== '' && name_val !== null) {
+            $('.EZD_Submit').attr('disabled' , false);
+        } else {
+            $('.EZD_Submit').attr('disabled' , true);
+        }
+    });
+
     $('#EZD_Amount_Select').on('change' , function () {
         let val = $(this).val();
-        const EZD_Amount_Input = document.getElementById("EZD_Amount_Input");
-
-
         if (val === 'others'){
             $(EZD_Amount_Input).css('display' , 'block');
         } else {
@@ -12,4 +22,5 @@ jQuery(document).ready(function($) {
             $('#EZD_Amount_Input').val(Number(val));
         }
     })
+
 });

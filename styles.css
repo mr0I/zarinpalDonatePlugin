@@ -1,3 +1,10 @@
+#erima_add_donate_frm input[type="text"]{
+    color: #424242 !important;
+}
+
+#erima_add_donate_frm input::placeholder{
+    color: #bdbdbd;
+}
 .EZD_FormItem {
     width: 100% !important;
     margin-top: 0 !important;
@@ -6,8 +13,15 @@
     box-shadow: none !important;
     width: 100% !important;
 }
+.EZD_FormItem.required label::after{
+    content: "(الزامی)";
+    color: red;
+    vertical-align: top;
+    margin: 0 5px;
+    font-size: 75%;
+}
 
-input.EZD_Submit{
+.EZD_Submit{
     margin-right:0 !important;
     width:100% !important;
 }
@@ -19,7 +33,7 @@ input.EZD_Submit{
     width: 100% !important;
 }
 
-input.EZD_Submit {
+.EZD_Submit {
     margin-right: 0 !important;
     background-color: #00C851 !important;
     color: #eee !important;
@@ -30,4 +44,18 @@ input.EZD_Submit {
 
 input[name="EZD_Amount"]{
     display:none;
+}
+
+#EZD_Amount_Input{
+    margin: 8px auto;
+}
+
+.EZD_Submit:disabled{
+    cursor: not-allowed;
+}
+
+#EZD_Amount_Select{
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 3px !important;
+    color: #424242;
 }
