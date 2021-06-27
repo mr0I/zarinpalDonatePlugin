@@ -38,9 +38,15 @@ function EZD_HamianHTML()
 }
 
 
-add_action( 'init', 'ErimaZarinpalDonateShortcode');
-function ErimaZarinpalDonateShortcode(){
+add_action( 'init', function (){
 	add_shortcode('ErimaZarinpalDonate', 'ErimaZarinpalDonateForm');
+	add_shortcode('ShowAuthorsList', 'ShowAuthorsListPage');
+});
+
+function ShowAuthorsListPage(){
+	ob_start();
+	include(plugin_dir_path( __FILE__ ).'./site/views/show_authors_list.php');
+	return do_shortcode(ob_get_clean());
 }
 
 function ErimaZarinpalDonateForm() {
@@ -573,9 +579,11 @@ function EZD_GetCallBackURL()
 }
 
 
+define('ZARIN_ADMIN_CSS', plugin_dir_url(__FILE__) . 'admin/css/');
 define('ZARIN_ADMIN_JS', plugin_dir_url(__FILE__) . 'admin/js/');
 define('ZARIN_ADMIN', plugin_dir_path(__FILE__) . 'admin/');
 add_action ('admin_enqueue_scripts', function(){
+	wp_enqueue_style('admin-styles', ZARIN_ADMIN_CSS.'admin-styles.css');
 	wp_enqueue_script('admin-scripts', ZARIN_ADMIN_JS.'admin-scripts.js' , array('jquery'));
 	wp_localize_script( 'admin-scripts', 'ZARINADMINAJAX', array(
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),

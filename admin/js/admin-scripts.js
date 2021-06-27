@@ -8,8 +8,8 @@ jQuery(document).ready(function($) {
         let selectedDonatesIds = Array.from(document.querySelectorAll('input[name="chkDonates"]:checked'))
             .map(e => $(e).val());
 
-        if (selectedVal === '0'){
-            alert('لطفا یک وضعیت را انتخاب نمایید!');
+        if (selectedVal === '0' || selectedDonatesIds.length === 0){
+            alert('لطفا یک وضعیت یا یک مورد را انتخاب نمایید!');
         } else {
             let nonce = $('#donate_select_nonce').val();
 
