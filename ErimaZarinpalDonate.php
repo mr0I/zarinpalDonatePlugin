@@ -3,7 +3,7 @@
 Plugin Name: Zarinpal Donate - حمایت مالی
 Plugin URI:
 Description: افزونه حمایت مالی از وبسایت ها -- برای استفاده تنها کافی است کد زیر را درون بخشی از برگه یا نوشته خود قرار دهید  [ErimaZarinpalDonate]
-Version: 1.2
+Version: 1.3
 Author: John Dou
 Author URI:
 */
@@ -14,6 +14,7 @@ define ('LIBDIR'  , ErimaZarinpalDonateDIR.'/lib');
 define ('TABLE_DONATE'  , 'erima_donate');
 
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+require_once ErimaZarinpalDonateDIR . 'env.php';
 
 
 if ( is_admin() )
@@ -44,6 +45,7 @@ function ErimaZarinpalDonateShortcode(){
 
 function ErimaZarinpalDonateForm() {
 	$out = '';
+	$outMessage = '';
 	$error = '';
 	$message = '';
 
@@ -149,7 +151,7 @@ function ErimaZarinpalDonateForm() {
 				));
 
 				//Header('Location: https://www.zarinpal.com/pg/StartPay/'.$result['Authority']);
-//				$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
+				//$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
 				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
 				return "<script>document.location = '${Location}'</script><center>در صورتی که به صورت خودکار به درگاه بانک منتقل نشدید <a href='${Location}'>اینجا</a> را کلیک کنید.</center>";
 			}
@@ -167,18 +169,18 @@ function ErimaZarinpalDonateForm() {
 	{
 		require_once( LIBDIR . '/nusoap.php' );
 
-	$Authority = filter_input(INPUT_GET, 'Authority', FILTER_SANITIZE_SPECIAL_CHARS);
+		$Authority = filter_input(INPUT_GET, 'Authority', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		if($_GET['Status'] == 'OK'){
 
-		$Record = EZD_GetDonate($Authority);
+			$Record = EZD_GetDonate($Authority);
 			if( $Record  === false)
 			{
 				$error .= 'چنین تراکنشی در سایت ثبت نشده است' . "<br>\r\n";
 			}
 			else
 			{
-//				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				//$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 				$client->soap_defencoding = 'UTF-8';
 				$result = $client->call('PaymentVerification', array(
@@ -244,22 +246,28 @@ function ErimaZarinpalDonateForm() {
   <style>
     '. $style . '
   </style>
-      <div style="clear:both;width:100%;float:right;">
+  
+   <div style="clear:both;width:100%;float:right;">
 	        <div id="EZD_MainForm">
           <div id="EZD_Form">';
-
 	if($message != '')
 	{
-		$out .= "<div id=\"EZD_Message\">
+		$outMessage = "<div id=\"EZD_Message\">
     ${message}
             </div>";
-	}
+		return $outMessage;
+	} else {
+		$author_name = get_the_author_meta( 'display_name', $_GET['transaction_id'] );
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			$Name = $current_user->display_name;
+		}
 
-
-	$out .=      '<form method="post" id="erima_add_donate_frm">
-              
+		$out .= '<h4 class="EZD_FormTitle">شما در حال حمایت از <span>'.$author_name.'</span>  هستید. </h4>';
+		$out .=      '<form method="post" id="erima_add_donate_frm">
               <div class="EZD_FormItem required">
                 <label class="EZD_FormLabel">نام شما</label>
+                
                 <div class="EZD_ItemInput"><input type="text" name="EZD_Name" id="EZD_Name_Input" value="'. $Name .'" /></div>
               </div>
               
@@ -282,6 +290,7 @@ function ErimaZarinpalDonateForm() {
                 <label class="EZD_FormLabel">مبلغ</label>
                 <div class="EZD_ItemInput">
                 <select name="EZD_Amount" id="EZD_Amount_Select">
+	                <option value="0">---</option>
 	                <option value="10000">10000 تومان</option>
 	                <option value="20000">20000 تومان</option>
 	                <option value="50000">50000 تومان</option>
@@ -297,7 +306,7 @@ function ErimaZarinpalDonateForm() {
               <input type="hidden" value="'. $_GET['transaction_id'] .'" name="author_id">
               <input type="hidden" value="'. $_GET['user_name'] .'" name="user_name">
               <div class="EZD_FormItem"> 
-              <button type="submit" name="submit" class="EZD_Submit" disabled>پرداخت</button>
+              <input type="submit" name="submit" class="EZD_Submit" value="پرداخت" disabled />
               </div>
             </form>
             
@@ -307,14 +316,17 @@ function ErimaZarinpalDonateForm() {
       </div>
 	';
 
-	if($error != '')
-	{
-		$out .= "<div id=\"EZD_Error\">
+		if($error != '')
+		{
+			$out .= "<div id=\"EZD_Error\">
     ${error}
             </div>";
+		}
+
+		return $out;
 	}
 
-	return $out;
+
 
 
 }

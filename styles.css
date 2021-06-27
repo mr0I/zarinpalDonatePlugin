@@ -59,3 +59,29 @@ input[name="EZD_Amount"]{
     border-radius: 3px !important;
     color: #424242;
 }
+
+.EZD_FormTitle{
+    width: 100%;
+    text-align: center;
+    font-weight: normal;
+}
+.EZD_FormTitle span{
+    color: forestgreen;
+    font-weight: bold;
+}
+#EZD_Message {
+    border-right: 2px solid forestgreen !important;
+    background-color: #eee !important;
+    color: forestgreen !important;
+    text-align: center !important;
+    margin: 24px auto !important;
+    line-height: 3 !important;
+    font-size: 125% !important;
+    font-family: vazir, sans-serif, Arial, Helvetica !important;
+}
+#EZD_Error {
+    text-align: center !important;
+    line-height: 2 !important;
+    font-family: vazir, sans-serif, Arial, Helvetica !important;
+    font-size: 115% !important;
+}
