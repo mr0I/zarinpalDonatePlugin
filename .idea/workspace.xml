@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29bfbe68-a3cd-47b6-b4e4-14019e691c46" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/css/admin-styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/site/views/show_authors_list.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inc/email_template.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/site/views/ShowDonatesListPage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EZD_Hamian.php" beforeDir="false" afterPath="$PROJECT_DIR$/EZD_Hamian.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ErimaZarinpalDonate.php" beforeDir="false" afterPath="$PROJECT_DIR$/ErimaZarinpalDonate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/css/admin-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/css/admin-styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/js/admin-scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/js/admin-scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/views/show_authors_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/site/views/show_authors_list.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/styles.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,23 +23,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/env.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ErimaZarinpalDonate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="42" column="34" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="34" />
+            <state relative-caret-position="452">
+              <caret line="615" column="53" selection-start-line="615" selection-start-column="53" selection-end-line="615" selection-end-column="53" />
               <folding>
                 <element signature="e#6#255#0#PHP" expanded="true" />
                 <element signature="n#ErimaZarinpalDonateForm#0;n#!!top" />
-                <element signature="e#5050#6765#0#PHP" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#4;n#form#0;n#!!top" expanded="true" />
@@ -44,54 +39,38 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/site/views/show_authors_list.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EZD_Hamian.php">
+        <entry file="file://$PROJECT_DIR$/site/views/ShowDonatesListPage.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="6" selection-start-line="3" selection-end-line="6" />
+            <state relative-caret-position="288">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
               <folding>
-                <element signature="e#360#1029#0#HTML" />
-                <element signature="e#1258#1310#0#HTML" expanded="true" />
-                <element signature="e#2794#2846#0#HTML" expanded="true" />
-                <element signature="e#3161#3185#0#HTML" expanded="true" />
-                <element signature="e#7302#7442#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts.js">
+        <entry file="file://$PROJECT_DIR$/site/views/show_authors_list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+            <state relative-caret-position="279">
+              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+              <folding>
+                <element signature="e#3151#3177#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/js/admin-scripts.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/EZD_Hamian.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/styles.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1536">
-              <caret line="70" column="1" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
+            <state relative-caret-position="453">
+              <caret line="184" column="13" lean-forward="true" selection-start-line="184" selection-start-column="13" selection-end-line="184" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -99,8 +78,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/css/admin-styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            <state>
+              <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/css/styles.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="628">
+              <caret line="184" column="10" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/js/scripts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="145">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+              <folding>
+                <element signature="e#917#1059#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -117,36 +117,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>author_id</find>
-      <find>$author_id</find>
-      <find>$author</find>
-      <find>author</find>
-      <find>_erima_donate</find>
-      <find>$Limit</find>
-      <find>erima_donate</find>
-      <find>TABLE_DONATE</find>
-      <find>EZD_Submit</find>
+      <find>LIBDIR</find>
+      <find>INCDIR</find>
       <find>$wpdb-&gt;</find>
-      <find>== '1'</find>
-      <find>نام</find>
-      <find>مبلغ</find>
-      <find>کد پی</find>
-      <find>EZD_Message</find>
-      <find>sand</find>
-      <find>اعتبارس</find>
-      <find>background-color: #cfc</find>
-      <find>global $wpdb</find>
-      <find>$wpdb-&gt;get_results</find>
-      <find>$erimaDonateTable</find>
-      <find>$PageNumInt</find>
-      <find>user_name</find>
-      <find>$result</find>
-      <find>wpfooter</find>
-      <find>defaultValue</find>
-      <find>donate_select_submit</find>
-      <find>admin-scripts</find>
+      <find>$AuthorId</find>
+      <find>Author</find>
+      <find>Date</find>
+      <find>InputDate</find>
+      <find>logged</find>
+      <find>current</find>
+      <find>LI</find>
       <find>shortcode</find>
-      <find>Paid</find>
+      <find>Payment information</find>
+      <find>if($page &gt; 1)</find>
+      <find>not_completed</find>
+      <find>styles</find>
+      <find>display_name</find>
+      <find>alignright</find>
+      <find>donatesList</find>
+      <find>.donatesList</find>
+      <find>نویسنده</find>
+      <find>danger</find>
+      <find>.paginate_btns a</find>
+      <find>card-date</find>
+      <find>sortable</find>
+      <find>paginate_btns</find>
+      <find>sort_btns</find>
+      <find>sort_by</find>
+      <find>10</find>
+      <find>page_num</find>
+      <find>همه</find>
     </findStrings>
     <dirStrings>
       <dir>C:\xampp\htdocs\wordpress\wp-content\plugins\erima-zarinpal-donate</dir>
@@ -164,14 +164,17 @@
         <option value="$PROJECT_DIR$/Uninstall.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/env.example.php" />
-        <option value="$PROJECT_DIR$/scripts.js" />
-        <option value="$PROJECT_DIR$/styles.css" />
         <option value="$PROJECT_DIR$/env.php" />
+        <option value="$PROJECT_DIR$/inc/email_template.php" />
+        <option value="$PROJECT_DIR$/styles.css" />
         <option value="$PROJECT_DIR$/admin/js/admin-scripts.js" />
-        <option value="$PROJECT_DIR$/EZD_Hamian.php" />
-        <option value="$PROJECT_DIR$/admin/css/admin-styles.css" />
+        <option value="$PROJECT_DIR$/scripts.js" />
         <option value="$PROJECT_DIR$/ErimaZarinpalDonate.php" />
+        <option value="$PROJECT_DIR$/site/views/ShowDonatesListPage.php" />
+        <option value="$PROJECT_DIR$/admin/css/admin-styles.css" />
+        <option value="$PROJECT_DIR$/assets/css/styles.css" />
         <option value="$PROJECT_DIR$/site/views/show_authors_list.php" />
+        <option value="$PROJECT_DIR$/EZD_Hamian.php" />
       </list>
     </option>
   </component>
@@ -187,7 +190,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -198,12 +200,30 @@
             <path>
               <item name="erima-zarinpal-donate" type="b2602c69:ProjectViewProjectNode" />
               <item name="erima-zarinpal-donate" type="462c0819:PsiDirectoryNode" />
-              <item name="site" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="erima-zarinpal-donate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="erima-zarinpal-donate" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="erima-zarinpal-donate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="erima-zarinpal-donate" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="erima-zarinpal-donate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="erima-zarinpal-donate" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -212,9 +232,15 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\wp2\wp-content\plugins\erima-zarinpal-donate\assets\css" />
+      <recent name="C:\xampp\htdocs\wp2\wp-content\plugins\erima-zarinpal-donate\assets\js" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\wp2\wp-content\plugins\erima-zarinpal-donate\assets\css" />
       <recent name="C:\xampp\htdocs\wordpress\wp-content\plugins\erima-zarinpal-donate" />
     </key>
   </component>
@@ -253,18 +279,40 @@
       <workItem from="1624686613784" duration="3988000" />
       <workItem from="1624770240857" duration="2809000" />
       <workItem from="1624774178881" duration="78000" />
-      <workItem from="1624775772596" duration="16079000" />
+      <workItem from="1624775772596" duration="16152000" />
+      <workItem from="1624853400929" duration="28442000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79078000" />
+    <option name="totallyTimeSpent" value="107593000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15351813" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15511727" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.2751896" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32286024" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15511727" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -278,27 +326,6 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.2751896" />
       <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32286024" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.15938166" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" visible="true" weight="0.2751896" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32286024" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -403,42 +430,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts.js">
+    <entry file="file://$PROJECT_DIR$/inc/email_template.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        <state relative-caret-position="144">
+          <caret line="6" column="28" lean-forward="true" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/js/admin-scripts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+          <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
+          <folding>
+            <element signature="e#95#1721#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/styles.css">
+    <entry file="file://$PROJECT_DIR$/assets/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1536">
-          <caret line="70" column="1" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
+        <state relative-caret-position="145">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#917#1059#0" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/bootstrap.min.css">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/css/admin-styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state>
+          <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/site/views/ShowDonatesListPage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ErimaZarinpalDonate.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="42" column="34" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="34" />
+        <state relative-caret-position="452">
+          <caret line="615" column="53" selection-start-line="615" selection-start-column="53" selection-end-line="615" selection-end-column="53" />
           <folding>
             <element signature="e#6#255#0#PHP" expanded="true" />
             <element signature="n#ErimaZarinpalDonateForm#0;n#!!top" />
-            <element signature="e#5050#6765#0#PHP" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#div#4;n#form#0;n#!!top" expanded="true" />
@@ -447,24 +501,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EZD_Hamian.php">
+    <entry file="file://$PROJECT_DIR$/assets/css/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" selection-start-line="3" selection-end-line="6" />
-          <folding>
-            <element signature="e#360#1029#0#HTML" />
-            <element signature="e#1258#1310#0#HTML" expanded="true" />
-            <element signature="e#2794#2846#0#HTML" expanded="true" />
-            <element signature="e#3161#3185#0#HTML" expanded="true" />
-            <element signature="e#7302#7442#0#HTML" expanded="true" />
-          </folding>
+        <state relative-caret-position="628">
+          <caret line="184" column="10" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/site/views/show_authors_list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        <state relative-caret-position="279">
+          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+          <folding>
+            <element signature="e#3151#3177#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EZD_Hamian.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="184" column="13" lean-forward="true" selection-start-line="184" selection-start-column="13" selection-end-line="184" selection-end-column="13" />
         </state>
       </provider>
     </entry>

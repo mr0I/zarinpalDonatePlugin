@@ -8,7 +8,9 @@ jQuery(document).ready(function($) {
 
     $('#erima_add_donate_frm').on('change' , function () {
         let name_val = EZD_Name_Input.value;
-        if (name_val !== '' && name_val !== null) {
+        let select_val = $('#EZD_Amount_Select').val();
+
+        if (name_val !== '' && name_val !== null && select_val !== '0') {
             $('.EZD_Submit').attr('disabled' , false);
         } else {
             $('.EZD_Submit').attr('disabled' , true);
@@ -23,6 +25,14 @@ jQuery(document).ready(function($) {
             $(EZD_Amount_Input).css('display' , 'none');
             $('#EZD_Amount_Input').val(Number(val));
         }
-    })
+    });
+
+    // seperate digits
+    $.fn.digits = function () {
+        return this.each(function () {
+            $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        })
+    };
+    $('.digits').digits();
 
 });

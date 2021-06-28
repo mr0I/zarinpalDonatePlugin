@@ -11,6 +11,7 @@ Author URI:
 defined('ABSPATH') or die('Access denied!');
 define ('ErimaZarinpalDonateDIR', plugin_dir_path( __FILE__ ));
 define ('LIBDIR'  , ErimaZarinpalDonateDIR.'/lib');
+define ('INCDIR'  , ErimaZarinpalDonateDIR.'/inc/');
 define ('TABLE_DONATE'  , 'erima_donate');
 
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -41,11 +42,18 @@ function EZD_HamianHTML()
 add_action( 'init', function (){
 	add_shortcode('ErimaZarinpalDonate', 'ErimaZarinpalDonateForm');
 	add_shortcode('ShowAuthorsList', 'ShowAuthorsListPage');
+	add_shortcode('ShowDonatesList', 'ShowDonatesListPage');
 });
 
 function ShowAuthorsListPage(){
 	ob_start();
 	include(plugin_dir_path( __FILE__ ).'./site/views/show_authors_list.php');
+	return do_shortcode(ob_get_clean());
+}
+
+function ShowDonatesListPage(){
+	ob_start();
+	include(plugin_dir_path( __FILE__ ).'./site/views/ShowDonatesListPage.php');
 	return do_shortcode(ob_get_clean());
 }
 
@@ -114,8 +122,8 @@ function ErimaZarinpalDonateForm() {
 		{
 			$CallbackURL = EZD_GetCallBackURL();  // Required
 			// URL also Can be https://ir.zarinpal.com/pg/services/WebGate/wsdl
-			//$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
-			$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			//$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 			$client->soap_defencoding = 'UTF-8';
 			$result = $client->call('PaymentRequest', array(
 					array(
@@ -157,8 +165,8 @@ function ErimaZarinpalDonateForm() {
 				));
 
 				//Header('Location: https://www.zarinpal.com/pg/StartPay/'.$result['Authority']);
-				//$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
-				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
+				$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
+				//$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
 				return "<script>document.location = '${Location}'</script><center>در صورتی که به صورت خودکار به درگاه بانک منتقل نشدید <a href='${Location}'>اینجا</a> را کلیک کنید.</center>";
 			}
 			else
@@ -186,8 +194,8 @@ function ErimaZarinpalDonateForm() {
 			}
 			else
 			{
-				//$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
-				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				//$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
 				$client->soap_defencoding = 'UTF-8';
 				$result = $client->call('PaymentVerification', array(
 						array(
@@ -218,6 +226,9 @@ function ErimaZarinpalDonateForm() {
 						array( '%s' )
 					);
 
+
+					sendEmail('ali' , '3123131' , 'wizard2070@gmail.com');
+//					sendEmail($userName , );
 
 				}
 				else
@@ -578,6 +589,21 @@ function EZD_GetCallBackURL()
 	return $pageURL;
 }
 
+function sendEmail($name,$tracking_code,$email){
+	ob_start();
+	include INCDIR . 'email_template.php';
+	$html=ob_get_contents();
+	ob_end_clean();
+	$html=  str_replace('{name}',$name, $html);
+	$html=  str_replace('{tracking_code}',$tracking_code, $html);
+	$headers  = 'From: no-reply@domain.com'. "\r\n" .
+	            'MIME-Version: 1.0' . "\r\n" .
+	            'Content-type: text/html; charset=utf-8' . "\r\n" .
+	            'X-Mailer: PHP/' . phpversion();
+
+	return wp_mail( $email, 'حمایت مالی از شما', $html, $headers);
+}
+
 
 define('ZARIN_ADMIN_CSS', plugin_dir_url(__FILE__) . 'admin/css/');
 define('ZARIN_ADMIN_JS', plugin_dir_url(__FILE__) . 'admin/js/');
@@ -595,12 +621,14 @@ if(is_admin()){
 	include(ZARIN_ADMIN . 'ajax_requests.php');
 }
 
-define('ZARIN_CSS_JS', plugin_dir_url(__FILE__));
+define('ZARIN_CSS', plugin_dir_url(__FILE__) . 'assets/css/');
+define('ZARIN_JS', plugin_dir_url(__FILE__) . 'assets/js/');
 add_action( 'wp_enqueue_scripts', function(){
 	// styles
-	wp_enqueue_style( 'erima_styles', ZARIN_CSS_JS . 'styles.css');
+	wp_enqueue_style( 'bootstrap', ZARIN_CSS . 'bootstrap.min.css');
+	wp_enqueue_style( 'erima_styles', ZARIN_CSS . 'styles.css');
 	// scripts
-	wp_enqueue_script('erima_scripts', ZARIN_CSS_JS.'scripts.js' , array('jquery'));
+	wp_enqueue_script('erima_scripts', ZARIN_JS.'scripts.js' , array('jquery'));
 });
 
 

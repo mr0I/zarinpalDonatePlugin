@@ -5,3 +5,7 @@
     color: #eee;
     text-decoration: none;
 }
+
+#wpfooter {
+    position: relative !important;
+}
