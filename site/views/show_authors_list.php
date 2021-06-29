@@ -1,7 +1,6 @@
 <?php defined( 'ABSPATH' ) or die( 'No script kiddies please!' ); ?>
 
 <?php
-
 if ( !is_user_logged_in() ) {
 	?>
     <div class="alert alert-warning text-center" role="alert">
@@ -13,43 +12,47 @@ if ( !is_user_logged_in() ) {
 	$current_user = wp_get_current_user();
 	$Name = $current_user->display_name;
 
-	$Limit = '';
-	if(isset($_GET['page_num']))
-	{
-		$page = htmlspecialchars(strip_tags(trim($_GET['page_num'])), ENT_QUOTES);
-		if($page == 0) $page = 1;
-
-		$End = $page * 4;
-		$Start = $End - 4;
-		if($page > 1) $Start ++;
-		$Limit = " LIMIT $Start , $End";
-	}
-
-
 	global $wpdb;
+	$LIMIT = '';
 	$erimaDonateTable = $wpdb->prefix . TABLE_DONATE;
 	$all_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC ");
+	$paid_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Paid' ORDER BY DonateID DESC $LIMIT ");
+
+
+	if(isset($_REQUEST['page_num']))
+	{
+		$page = htmlspecialchars(strip_tags(trim($_REQUEST['page_num'])), ENT_QUOTES);
+
+		$lim = getenv('PAGINATE_NUM');
+		$offset = --$page * (getenv('PAGINATE_NUM'));
+
+		$LIMIT = " LIMIT $lim OFFSET $offset";
+	}
+
 
 	if (isset($_GET['sort_by'])){
 		$sort = $_GET['sort_by'];
 		switch ($sort){
-			case 'all';
-				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC $Limit ");
+			case 'all':
+				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC $LIMIT ");
+				$total_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ");
 				break;
 			case 'paid':
-				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Paid' ORDER BY DonateID DESC $Limit ");
+				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Paid' ORDER BY DonateID DESC $LIMIT ");
+				$total_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Paid' ");
 				break;
 			case 'not_paid':
-				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Not Paid' ORDER BY DonateID DESC $Limit ");
+				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Not Paid' ORDER BY DonateID DESC $LIMIT ");
+				$total_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Not Paid' ");
 				break;
-            default:
-	            $user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC $Limit ");
+			default:
+				$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC $LIMIT ");
+				$total_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ");
 		}
-	} else{
-		$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC $Limit ");
+	} else {
+		$user_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ORDER BY DonateID DESC $LIMIT ");
+		$total_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' ");
 	}
-
-	$paid_donates = $wpdb->get_results( "SELECT * FROM $erimaDonateTable WHERE Author='$Name' AND paymentStatus='Paid' ORDER BY DonateID DESC $Limit ");
 	?>
 
 	<?php
@@ -59,19 +62,21 @@ if ( !is_user_logged_in() ) {
 		<?php
 	} else {
 		?>
+        <div class="authors_donates_container">
         <div class="container">
             <div class="row">
+                <h4 id="authors_donates_title">لیست کمک های مالی شما</h4>
                 <div class="sort_btns">
-                    <a href="?sort_by=all">همه <span class="count">(<?= count($all_donates); ?>)</span></a> |</a>
-                    <a href="?sort_by=paid">پرداخت شده <span class="count">(<?= count($paid_donates); ?>)</span></a> |</a>
-                    <a href="?sort_by=not_paid">پرداخت نشده <span class="count">(<?= count($all_donates) -count($paid_donates); ?>)</span></a></a>
+                    <a class="<?php if($_GET['sort_by']=='all' || $_GET['sort_by']=='') echo 'current'; ?>" href="?page=authorslist&page_num=1&sort_by=all">همه <span class="count">(<?= count($all_donates); ?>)</span></a> |</a>
+                    <a class="<?php if($_GET['sort_by']=='paid') echo 'current'; ?>" href="?page=authorslist&page_num=1&sort_by=paid">پرداخت شده <span class="count">(<?= count($paid_donates); ?>)</span></a> |</a>
+                    <a class="<?php if($_GET['sort_by']=='not_paid') echo 'current'; ?>" href="?page=authorslist&page_num=1&sort_by=not_paid">پرداخت نشده <span class="count">(<?= count($all_donates) - count($paid_donates); ?>)</span></a></a>
                 </div>
 
                 <div class="table-responsive">
                     <table class="table" id="authors_list_table">
                         <thead class="thead-light">
                         <tr>
-                            <th>#</th>
+                            <th>ردیف</th>
                             <th>مبلغ</th>
                             <th>وضعیت تسویه حساب</th>
                             <th>تاریخ</th>
@@ -97,17 +102,15 @@ if ( !is_user_logged_in() ) {
             </div>
         </div>
 
-
-
-
+        <!--   Pagination     -->
         <div class="actions paginate_btns">
 			<?php
-			$total = count($user_donates);
+			$total = count($total_donates);
 
 			$PageNumInt = 1;
 			if($total > 0)
 			{
-				$PagesNum = $total / 4;
+				$PagesNum = $total / getenv('PAGINATE_NUM');
 				$PageNumInt = intval($PagesNum);
 				if($PageNumInt < $PagesNum)
 					$PageNumInt++;
@@ -119,17 +122,19 @@ if ( !is_user_logged_in() ) {
 			}
 			?>
 			<?php
+			if (!isset($_GET['sort_by']))  $_GET['sort_by'] = 'all';
 			for($i = 1 ; $i <= $PageNumInt; $i++)
 			{
 				if($i == $currentPage)
-					echo '<a href="?page_num='. $i .'"  class="first-page active">'. $i .'</a>';
+					echo '<a href="?page=authorslist&page_num='. $i .' &sort_by='.$_GET['sort_by'].' "  class="first-page active">'. $i .'</a>';
 				else
-					echo '<a href="?page_num='. $i .'"  class="first-page">'. $i .'</a>';
+					echo '<a href="?page=authorslist&page_num='. $i .' &sort_by='.$_GET['sort_by'].' "  class="first-page">'. $i .'</a>';
 			}
 			?>
         </div>
         <br class="clear" />
-
+        <!--   Pagination     -->
+        </div>
 		<?php
 	}
 }

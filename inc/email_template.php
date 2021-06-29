@@ -8,7 +8,8 @@
 	-ms-border-radius: 3px;">
 	<div style="width:100%;border-bottom: 2px solid #CCC;text-align: center;font-size: 10pt;padding: 20px 0;background-color:#DDD;"><?= 'حمایت مالی از شما' ?></div>
 	<div style="font-size: 9pt;padding: 20px;line-height: 150%;">
-		<h4 style=" text-align: right;margin-bottom: 20px;color:#009;"><?= 'پرداختی با مشخصات زیر برای شما ارسال شد.' ?></h4>
+		<h4 style=" text-align: right;margin-bottom: 20px;color:#009;width: 100%;"><?= 'سلام ' ?>{name}<?= ' عزیز ' ?></h4>
+		<h4 style=" text-align: right;margin-bottom: 20px;color:#009;"><?= 'پرداختی با مشخصات زیر برای شما ثبت شد.' ?></h4>
 		<p style="text-align: right"><span><?= 'مبلغ واریزی' ?>: </span>{AmountTomaan}</p>
 		<p style="text-align: right"><span><?= 'کد رهگیری' ?>: </span>{tracking_code}</p>
 	</div>

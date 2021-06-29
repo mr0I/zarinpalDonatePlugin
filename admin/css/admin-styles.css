@@ -9,3 +9,21 @@
 #wpfooter {
     position: relative !important;
 }
+
+.paginate_btns {
+    margin: 13px auto;
+}
+.paginate_btns a{
+    padding: 3px 10px;
+    color: #e5490a;
+    background-color: transparent;
+    font-weight: 700;
+    font-size: 100%;
+    margin: 3px;
+    border-radius: 50px;
+    border: 1px solid #e5490a;
+}
+.paginate_btns a:hover , .paginate_btns a.active{
+    color: #EEEEEE;
+    background-color: #e5490a;
+}

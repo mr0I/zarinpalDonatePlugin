@@ -90,10 +90,11 @@ input[name="EZD_Amount"]{
 .donatesList {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     align-content: center;
     width: 100%;
+    padding: 0 24px;
 }
 .donatesList .donatesItem{
     padding: 5px;
@@ -144,8 +145,6 @@ input[name="EZD_Amount"]{
 
 .donateListContainer{
     background-color: #fff;
-    padding: 20px;
-    margin-top: 24px;
 }
 .donateListContainer .btn-group {
     margin-top: 24px;
@@ -184,5 +183,25 @@ input[name="EZD_Amount"]{
 }
 .sort_btns {
     padding: 8px 0;
+}
+.sort_btns a{
+    font-weight: normal;
+    font-size: 100%;
+    color: blue;
+    font-family: vazir;
+}
+.sort_btns a.current{
+    font-weight: bold;
+    color: #212121;
+}
+.authors_donates_container {
+    background: #fff;
+    padding: 50px 15px;
+}
+.authors_donates_container #authors_donates_title{
+    width: 100%;
+    text-align: center;
+    font-size: 150%;
+    margin: 15px auto;
 }
 /* end ShowDonatesListPage */

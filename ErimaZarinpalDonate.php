@@ -3,7 +3,7 @@
 Plugin Name: Zarinpal Donate - حمایت مالی
 Plugin URI:
 Description: افزونه حمایت مالی از وبسایت ها -- برای استفاده تنها کافی است کد زیر را درون بخشی از برگه یا نوشته خود قرار دهید  [ErimaZarinpalDonate]
-Version: 1.3
+Version: 1.4
 Author: John Dou
 Author URI:
 */
@@ -122,8 +122,11 @@ function ErimaZarinpalDonateForm() {
 		{
 			$CallbackURL = EZD_GetCallBackURL();  // Required
 			// URL also Can be https://ir.zarinpal.com/pg/services/WebGate/wsdl
-			$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
-			//$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+
+			$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			if (getenv('IS_DEV') == '1'){
+				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+			}
 			$client->soap_defencoding = 'UTF-8';
 			$result = $client->call('PaymentRequest', array(
 					array(
@@ -165,8 +168,13 @@ function ErimaZarinpalDonateForm() {
 				));
 
 				//Header('Location: https://www.zarinpal.com/pg/StartPay/'.$result['Authority']);
-				$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
-				//$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
+
+				$Location = 'https://www.zarinpal.com/pg/StartPay/'.$result['Authority'];
+				if (getenv('IS_DEV') == '1'){
+					$Location = 'https://sandbox.zarinpal.com/pg/StartPay/'.$result['Authority'];
+				}
+
+
 				return "<script>document.location = '${Location}'</script><center>در صورتی که به صورت خودکار به درگاه بانک منتقل نشدید <a href='${Location}'>اینجا</a> را کلیک کنید.</center>";
 			}
 			else
@@ -194,8 +202,11 @@ function ErimaZarinpalDonateForm() {
 			}
 			else
 			{
-				$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
-				//$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				$client = new nusoap_client('https://de.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				if (getenv('IS_DEV') == '1'){
+					$client = new nusoap_client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl', 'wsdl');
+				}
+
 				$client->soap_defencoding = 'UTF-8';
 				$result = $client->call('PaymentVerification', array(
 						array(
@@ -215,7 +226,6 @@ function ErimaZarinpalDonateForm() {
 					$EZD_TotalAmount = get_option("EZD_TotalAmount");
 					update_option("EZD_TotalAmount" , $EZD_TotalAmount + $Record['AmountTomaan']);
 
-
 					global $wpdb;
 					$table = $wpdb->prefix . TABLE_DONATE;
 					$update = $wpdb->update( $table, array(
@@ -226,10 +236,11 @@ function ErimaZarinpalDonateForm() {
 						array( '%s' )
 					);
 
-
-					sendEmail('ali' , '3123131' , 'wizard2070@gmail.com');
-//					sendEmail($userName , );
-
+					// Send email to author
+					$donate = $wpdb->get_results( "SELECT * FROM $table WHERE Authority='$Authority' ");
+					$AuthorName = $donate[0]->Author;
+					$AuthorEmail = $wpdb->get_results( "SELECT user_email FROM $wpdb->users WHERE display_name='$AuthorName' ");
+					sendEmail( $AuthorName, $result['RefID'] , $donate[0]->AmountTomaan , $AuthorEmail[0]->user_email);
 				}
 				else
 				{
@@ -580,7 +591,7 @@ function EZD_GetCallBackURL()
 
 	if ($_SERVER["SERVER_PORT"] != "80")
 	{
-		$pageURL .= $ServerName .":". $ServerPort . $_SERVER["REQUEST_URI"];
+		$pageURL .= $ServerName .":". $ServerPort . $_SERVER["REQUEST_URI"] ;
 	}
 	else
 	{
@@ -589,19 +600,20 @@ function EZD_GetCallBackURL()
 	return $pageURL;
 }
 
-function sendEmail($name,$tracking_code,$email){
+function sendEmail($name,$tracking_code,$AmountTomaan,$email){
 	ob_start();
 	include INCDIR . 'email_template.php';
 	$html=ob_get_contents();
 	ob_end_clean();
 	$html=  str_replace('{name}',$name, $html);
+	$html=  str_replace('{AmountTomaan}',$AmountTomaan, $html);
 	$html=  str_replace('{tracking_code}',$tracking_code, $html);
 	$headers  = 'From: no-reply@domain.com'. "\r\n" .
 	            'MIME-Version: 1.0' . "\r\n" .
 	            'Content-type: text/html; charset=utf-8' . "\r\n" .
 	            'X-Mailer: PHP/' . phpversion();
 
-	return wp_mail( $email, 'حمایت مالی از شما', $html, $headers);
+	return wp_mail( $email, 'حمایت مالی(سیسوگ)', $html, $headers);
 }
 
 
