@@ -3,15 +3,16 @@
 Plugin Name: Zarinpal Donate - حمایت مالی
 Plugin URI:
 Description: افزونه حمایت مالی از وبسایت ها -- برای استفاده تنها کافی است کد زیر را درون بخشی از برگه یا نوشته خود قرار دهید  [ErimaZarinpalDonate]
-Version: 1.4
+Version: 1.5
 Author: John Dou
-Author URI:
+Author URI: sisoog.com
 */
 
 defined('ABSPATH') or die('Access denied!');
 define ('ErimaZarinpalDonateDIR', plugin_dir_path( __FILE__ ));
 define ('LIBDIR'  , ErimaZarinpalDonateDIR.'/lib');
 define ('INCDIR'  , ErimaZarinpalDonateDIR.'/inc/');
+define('ASSETSDIR', plugin_dir_url(__FILE__) . 'assets/');
 define ('TABLE_DONATE'  , 'erima_donate');
 
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -23,7 +24,8 @@ if ( is_admin() )
 	add_action('admin_menu', 'EZD_AdminMenuItem');
 	function EZD_AdminMenuItem()
 	{
-		add_menu_page( 'تنظیمات افزونه حمایت مالی - زرین پال', 'حمایت مالی', 'administrator', 'EZD_MenuItem', 'EZD_MainPageHTML', /*plugins_url( 'myplugin/images/icon.png' )*/'', 6 );
+		add_menu_page( 'تنظیمات افزونه حمایت مالی - زرین پال', 'حمایت مالی', 'administrator', 'EZD_MenuItem', 'EZD_MainPageHTML', /*plugins_url( 'myplugin/images/icon.png' )*/'dashicons-money-alt
+', 6 );
 		add_submenu_page('EZD_MenuItem','نمایش حامیان مالی','نمایش حامیان مالی', 'administrator','EZD_Hamian','EZD_HamianHTML');
 	}
 }
@@ -270,13 +272,25 @@ function ErimaZarinpalDonateForm() {
 	}
 
 
+	$author_name = get_the_author_meta( 'display_name', $_GET['transaction_id'] );
+	if ( is_user_logged_in() ) {
+		$current_user = wp_get_current_user();
+		$Name = $current_user->display_name;
+	}
+
 	$out = '
   <style>
     '. $style . '
   </style>
   
+  
+ 
+  
    <div style="clear:both;width:100%;float:right;">
-	        <div id="EZD_MainForm">
+	   <div id="EZD_MainForm">
+	        <div class="EZD_FormTitle">
+		        <h4 class="">شما در حال حمایت از <span>'.$author_name.'</span>  هستید. </h4>
+			</div>
           <div id="EZD_Form">';
 	if($message != '')
 	{
@@ -285,14 +299,7 @@ function ErimaZarinpalDonateForm() {
             </div>";
 		return $outMessage;
 	} else {
-		$author_name = get_the_author_meta( 'display_name', $_GET['transaction_id'] );
-		if ( is_user_logged_in() ) {
-			$current_user = wp_get_current_user();
-			$Name = $current_user->display_name;
-		}
-
-		$out .= '<h4 class="EZD_FormTitle">شما در حال حمایت از <span>'.$author_name.'</span>  هستید. </h4>';
-		$out .=      '<form method="post" id="erima_add_donate_frm">
+		$out .=      '<div class="col-lg-5 col-md-5 col-sm-12"><form method="post" id="erima_add_donate_frm">
               <div class="EZD_FormItem required">
                 <label class="EZD_FormLabel">نام شما</label>
                 
@@ -337,8 +344,14 @@ function ErimaZarinpalDonateForm() {
               <input type="submit" name="submit" class="EZD_Submit" value="پرداخت" disabled />
               </div>
             </form>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+            <figure>
+	            <img src="'.ASSETSDIR.'images/donate.jpg" alt="">
+			</figure>
+			</div>
             
-            
+           
           </div>
         </div>
       </div>

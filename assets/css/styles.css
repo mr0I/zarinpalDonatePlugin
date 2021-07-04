@@ -1,9 +1,11 @@
 #erima_add_donate_frm input[type="text"]{
     color: #424242 !important;
 }
-
 #erima_add_donate_frm input::placeholder{
     color: #bdbdbd;
+}
+#erima_add_donate_frm input ,#erima_add_donate_frm select ,#erima_add_donate_frm option {
+    font-family: vazir, sans-serif, Arial, Helvetica;
 }
 .EZD_FormItem {
     width: 100% !important;
@@ -60,15 +62,40 @@ input[name="EZD_Amount"]{
     color: #424242;
 }
 
+#EZD_MainForm{
+    width: auto !important;
+}
+
 .EZD_FormTitle{
     width: 100%;
     text-align: center;
     font-weight: normal;
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 3px;
+}
+.EZD_FormTitle h4{
+    margin: 0;
+    font-size: 150% !important;
 }
 .EZD_FormTitle span{
     color: forestgreen;
     font-weight: bold;
 }
+
+#EZD_Form{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    width: 100% !important;
+    padding: 24px 8px !important;
+    background-color: #ffffff;
+    margin: 13px auto;
+    border-radius: 3px;
+}
+
 #EZD_Message {
     border-right: 2px solid forestgreen !important;
     background-color: #eee !important;
@@ -90,14 +117,14 @@ input[name="EZD_Amount"]{
 .donatesList {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     align-content: center;
     width: 100%;
     padding: 0 24px;
 }
 .donatesList .donatesItem{
-    padding: 5px;
+    padding: 0;
     margin:13px;
     border-radius: 3px;
     border-color: #fff;
@@ -116,10 +143,33 @@ input[name="EZD_Amount"]{
     color: #e5490a;
     font-weight: bold;
     font-size: 125%;
+    font-family: vazir, sans-serif, Arial, Helvetica;
 }
-.donatesList .donatesItem .card-date{
+
+.donatesList .donatesItem .card-footer{
+    padding: 0 5px !important;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+    font-family: vazir, sans-serif, Arial, Helvetica;
+    background-color: #fafafa;
+    border-top: none;
+}
+.donatesList .donatesItem .card-footer .card-date{
     text-align: center;
-    font-size: 85%;
+    font-family: vazir, sans-serif, Arial, Helvetica;
+}
+.donatesList .donatesItem .card-footer p{
+    margin: 0;
+    padding: 4px 8px;
+    font-size: 115%;
+}
+.donatesList .donatesItem .card-footer p img{
+    width: 20px;
+    height: auto;
+    border-radius: 50px;
 }
 .donatesList .donatesItem figure{
     width: 100%;
@@ -145,6 +195,7 @@ input[name="EZD_Amount"]{
 
 .donateListContainer{
     background-color: #fff;
+    padding: 24px 0;
 }
 .donateListContainer .btn-group {
     margin-top: 24px;
@@ -162,13 +213,21 @@ input[name="EZD_Amount"]{
 
 #authors_list_table td ,#authors_list_table th{
     text-align: center;
+    font-family: vazir, sans-serif, Arial, Helvetica;
+}
+
+#authors_list_table thead > tr {
+    background-color: #e5490a;
+}
+#authors_list_table thead > tr th {
+    color: #e0e0e0;
 }
 
 .paginate_btns {
     margin: 13px auto;
 }
 .paginate_btns a{
-    padding: 5px 10px;
+    padding: 3px 10px;
     color: #e5490a;
     background-color: transparent;
     font-weight: 700;
@@ -176,6 +235,7 @@ input[name="EZD_Amount"]{
     margin: 3px;
     border-radius: 50px;
     border: 1px solid #e5490a;
+    font-family: vazir, sans-serif, Arial, Helvetica;
 }
 .paginate_btns a:hover , .paginate_btns a.active{
     color: #EEEEEE;
@@ -188,7 +248,7 @@ input[name="EZD_Amount"]{
     font-weight: normal;
     font-size: 100%;
     color: blue;
-    font-family: vazir;
+    font-family: vazir, sans-serif, Arial, Helvetica;
 }
 .sort_btns a.current{
     font-weight: bold;
@@ -205,3 +265,10 @@ input[name="EZD_Amount"]{
     margin: 15px auto;
 }
 /* end ShowDonatesListPage */
+
+
+@media screen and (max-width: 768px){
+    #EZD_Form{
+        flex-direction: column-reverse;
+    }
+}

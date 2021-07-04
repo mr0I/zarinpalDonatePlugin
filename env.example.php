@@ -1,7 +1,7 @@
 <?php
 
 $variables = [
-	'IS_DEV' => 'use sandbox or not' ,// boolean
+	'IS_DEV' => '0' ,// use sandbox or not (boolean)
 	'PAGINATE_NUM' => 10 // number of pages in paginations
 ];
 

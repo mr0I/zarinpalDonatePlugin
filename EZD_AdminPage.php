@@ -15,7 +15,12 @@ if ( $_POST ) {
 	if ( isset($_POST['EZD_IsError']) ) {
 		update_option( 'EZD_IsError', $_POST['EZD_IsError'] );
 	}
-	
+
+
+	if ( isset($_POST['EZD_LoginUrl']) ) {
+		update_option( 'EZD_LoginUrl', $_POST['EZD_LoginUrl'] );
+	}
+
   if ( isset($_POST['EZD_Unit']) ) {
 		update_option( 'EZD_Unit', $_POST['EZD_Unit'] );
 	}
@@ -40,7 +45,6 @@ if ( $_POST ) {
 //XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ?>
 <h2 id="add-new-user">تنظیمات افزونه حمایت مالی - زرین پال</h2>
-<h2 id="add-new-user">جمع تمام پرداخت ها : <?php echo get_option("EZD_TotalAmount"); ?>  تومان</h2>
 <form method="post">
   <table class="form-table">
     <tbody>
@@ -59,7 +63,12 @@ if ( $_POST ) {
         <th><label for="EZD_IsError">خطا در پرداخت</label></th>
         <td><input type="text" class="regular-text" value="<?php echo get_option( 'EZD_IsError'); ?>" id="EZD_IsError" name="EZD_IsError"></td>
       </tr>
-      
+
+      <tr>
+        <th><label for="EZD_LoginUrl">لینک صفحه ورود</label></th>
+        <td><input type="text" class="regular-text" value="<?php echo get_option( 'EZD_LoginUrl'); ?>" id="EZD_LoginUrl" name="EZD_LoginUrl"></td>
+      </tr>
+
       <tr class="user-display-name-wrap">
         <th><label for="EZD_Unit">واحد پول</label></th>
         <td>

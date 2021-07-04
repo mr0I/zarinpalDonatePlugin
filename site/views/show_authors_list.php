@@ -1,11 +1,17 @@
 <?php defined( 'ABSPATH' ) or die( 'No script kiddies please!' ); ?>
 
 <?php
+// Convert Date To Shamsi
+require_once LIBDIR . '/jdate/jdatetime.class.php';
+$date = new jDateTime(true, true, 'Asia/Tehran');
+?>
+
+<?php
 if ( !is_user_logged_in() ) {
 	?>
     <div class="alert alert-warning text-center" role="alert">
-        <p>برای مشاهده این صفحه باید وارد سایت شوید!</p>
-        <p><a href="https://sisoog.com/login/">ورود به سایت</a></p>
+        <p class="text-center">برای مشاهده این صفحه باید وارد سایت شوید!</p>
+        <p class="text-center"><a href="<?= (get_option('EZD_LoginUrl')) ? get_option('EZD_LoginUrl') : '#' ?>">ورود به سایت</a></p>
     </div>
 	<?php
 }else{
@@ -58,7 +64,7 @@ if ( !is_user_logged_in() ) {
 	<?php
 	if (count($user_donates) == 0){
 		?>
-        <div class="alert alert-warning" role="alert"><p>هنوز هیچ پرداختی ثبت نشده است!</p></div>
+        <div class="alert alert-warning w-100" role="alert"><p class="text-center">هنوز هیچ پرداختی ثبت نشده است!</p></div>
 		<?php
 	} else {
 		?>
@@ -74,7 +80,7 @@ if ( !is_user_logged_in() ) {
 
                 <div class="table-responsive">
                     <table class="table" id="authors_list_table">
-                        <thead class="thead-light">
+                        <thead>
                         <tr>
                             <th>ردیف</th>
                             <th>مبلغ</th>
@@ -89,9 +95,9 @@ if ( !is_user_logged_in() ) {
 							?>
                             <tr>
                                 <td><?= $counter++; ?></td>
-                                <td class="digits"><?= $row->AmountTomaan; ?></td>
+                                <td class="digits"><?= $row->AmountTomaan . ' ' . get_option('EZD_Unit'); ?></td>
                                 <td style="font-weight: bold;"><?= ($row->paymentStatus == 'Paid')? '<span style="color: seagreen">پرداخت شده</span>' : '<span style="color: darkred">پرداخت نشده</span>' ?></td>
-                                <td><?= $row->InputDate; ?></td>
+                                <td><?= $date->date("l j F Y H:i" , strtotime($row->InputDate)); ?></td>
                             </tr>
 							<?php
 						}
