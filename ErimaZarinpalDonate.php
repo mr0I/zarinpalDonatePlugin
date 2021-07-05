@@ -272,7 +272,13 @@ function ErimaZarinpalDonateForm() {
 	}
 
 
-	$author_name = get_the_author_meta( 'display_name', $_GET['transaction_id'] );
+	global $wpdb;
+	$usersTable = $wpdb->prefix . 'users';
+	$user_id = $_GET['transaction_id'];
+	$display_name = $_GET['user_name'];
+	$author = $wpdb->get_results( "SELECT * FROM $usersTable WHERE id='$user_id' AND display_name='$display_name' ");
+
+	(sizeof($author) !== 0)? $author_name = get_the_author_meta( 'display_name', $_GET['transaction_id'] ) : $author_name = '';
 	if ( is_user_logged_in() ) {
 		$current_user = wp_get_current_user();
 		$Name = $current_user->display_name;
