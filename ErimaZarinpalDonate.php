@@ -93,7 +93,7 @@ function ErimaZarinpalDonateForm() {
 		$Description =    filter_input(INPUT_POST, 'EZD_Description', FILTER_SANITIZE_SPECIAL_CHARS);  // Optional
 		$Amount =         filter_input(INPUT_POST, 'EZD_Amount', FILTER_SANITIZE_SPECIAL_CHARS);
 		$AuthorId =       filter_input(INPUT_POST, 'author_id', FILTER_SANITIZE_SPECIAL_CHARS); // Required
-		$userName =       filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_SPECIAL_CHARS); // Required
+		$userName =       filter_input(INPUT_POST, 'user_name' , FILTER_SANITIZE_SPECIAL_CHARS); // Required
 
 		if ($Name == '' || $Name == null){
 			$error .= 'لطفا نام خود را وارد کنید!' . "<br>\r\n";
@@ -405,7 +405,7 @@ function EZD_CreateDatabaseTables()
 					  `Author` varchar(55),
 					  PRIMARY KEY (`DonateID`),
 					  KEY `DonateID` (`DonateID`)
-					) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;";
 	dbDelta($table);
 	// Other Options
 	add_option("EZD_TotalAmount", 0, '', 'yes');
